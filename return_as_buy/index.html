@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css">
+    <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <style>
+        html, body {
+            padding: 0;
+            margin: 0;
+            font-family: sans-serif;
+        }
+        html, body, #map {
+            height: 100%;
+            width: 100%;
+        }
+        h1, p, ul li, form span, text{
+          letter-spacing: 2px;
+        }
+        div.button{
+            display: inline-block;
+            font-size: 12px;
+            letter-spacing: 1px;
+            cursor: pointer;
+        }
+        .hidden{
+            display: none;
+        }
+    </style>
+    <title>滅頂秒退地圖</title>
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand">滅頂秒退地圖</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav">
+            <li><a href="#map">秒退地圖</a></li>
+            <li><a href="#report">我要回報</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div id="map">
+        <a name="map"></a>
+    </div>
+    <script src="./lib/tabletop.js"></script>
+    <script src="./main.js"></script>
+    <div id="reportForm" align="center">
+        <a name="report"></a>
+        <iframe src="https://docs.google.com/forms/d/19u9Y8KDzgRDe9ptUKaC24Lh_82ofeM40QMIYix6XaXk/viewform?embedded=true" width="760" height="500" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+    </div>
+</body>
+</html>
