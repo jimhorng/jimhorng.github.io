@@ -7,7 +7,7 @@ var CartoDB_DarkMatter = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all
 });
 
 // Load and initialize leaflet map.
-var map = L.map('map').setView([25.046374, 121.517896], 13);
+var map = L.map('map').setView([25.046374, 121.517896], 12);
 CartoDB_DarkMatter.addTo(map);
 map._initPathRoot();
 
