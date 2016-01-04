@@ -13,13 +13,12 @@ map._initPathRoot();
 
 Tabletop.init({
     key: "1NoZDaQLH_1cPO77GRcP4NG5Ll0CzsgMNGzKOBK0h3dk", //google spreadsheet id
-    callback: displayMapInfo,
+    callback: parseData,
     simpleSheet: true
 });
 
-function displayMapInfo(data, tabletop) {
-    var summary_data = tabletop.sheets("summary").all();
-    for (var i in summary_data) {
+function displayMapInfo(summary_data) {
+       for (var i in summary_data) {
         var return_data = summary_data[i]; //getting e row from table
         var coordinate = [return_data.latitude, return_data.longitude];
         var place_name = return_data.shop_name + "_" + return_data.branch_name
@@ -43,4 +42,19 @@ function displayMapInfo(data, tabletop) {
         })
             .addTo(map);
     }
+}
+
+function displayTotal(total_datas) {
+    for (var i in total_datas) {
+        var total_data = total_datas[i]; //getting e row from table
+        var total_refund_in_ten_thousands = (total_data.total_refund / 10000)
+        var total_refund_norm = total_refund_in_ten_thousands.toFixed(0)
+        document.getElementById("total_refund").innerHTML = "總秒退: $" + total_refund_norm + "萬";
+        document.getElementById("total_count").innerHTML = "總次數: " + total_data.total_count;
+    }
+}
+
+function parseData(data, tabletop) {
+    displayMapInfo(tabletop.sheets("summary").all());
+    displayTotal(tabletop.sheets("total").all());
 }
