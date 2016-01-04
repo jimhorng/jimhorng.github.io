@@ -23,7 +23,8 @@ function displayMapInfo(data, tabletop) {
         var return_data = summary_data[i]; //getting e row from table
         var coordinate = [return_data.latitude, return_data.longitude];
         var place_name = return_data.shop_name + "_" + return_data.branch_name
-        L.circle(coordinate, 200, {
+        var radius = (return_data.size - 5) * 50
+        L.circle(coordinate, radius, {
             color: 'red',
             fillColor: '#f03',
             fillOpacity: 0.5
