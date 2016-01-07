@@ -10,12 +10,8 @@
     <script src="./lib/leaflet-0.7/leaflet.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script type="text/javascript">
-      function resizeIframe(obj){
-         obj.style.height = 0;
-         obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
-      }
-    </script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <style>
         html, body {
             height: 100%;
@@ -89,12 +85,12 @@
           </button>
           <a class="navbar-brand" href="#">滅頂秒退地圖</a>
           <a class="navbar-brand" id="total_refund"></a>
-          <a class="navbar-brand" id="total_count"></a>
           <div class="fb-like navbar-brand" data-href="http://jimhorng.github.io/return_as_buy/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">
             <li><a href="#map">秒退地圖</a></li>
+            <li><a href="#rank">排行榜</a></li>
             <li><a href="#report">我要回報</a></li>
           </ul>
         </div>
@@ -104,6 +100,14 @@
     <div id="map" align="center">
         <a name="map"></a>
     </div>
+
+    <!-- ranking charts -->
+    <a name="rank"></a>
+    <div id="chart_county_div" align="center">
+    </div>
+    <div id="chart_brand_div" align="center">
+    </div>
+
     <script src="./lib/tabletop.js"></script>
     <script src="./main.js"></script>
 

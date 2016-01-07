@@ -12,9 +12,17 @@ CartoDB_DarkMatter.addTo(map);
 map._initPathRoot();
 
 Tabletop.init({
-    key: "1NoZDaQLH_1cPO77GRcP4NG5Ll0CzsgMNGzKOBK0h3dk", //google spreadsheet id
+    //google spreadsheet id
+    key: "1NoZDaQLH_1cPO77GRcP4NG5Ll0CzsgMNGzKOBK0h3dk",
     callback: parseData,
     simpleSheet: true
+});
+
+// draw chart
+google.charts.load('current', {packages: ['corechart']});
+google.charts.setOnLoadCallback(function () {
+    drawBrandRanking();
+    drawCountyRanking();
 });
 
 function displayMapInfo(summary_data) {
@@ -49,12 +57,56 @@ function displayTotal(total_datas) {
         var total_data = total_datas[i]; //getting e row from table
         var total_refund_in_ten_thousands = (total_data.total_refund / 10000)
         var total_refund_norm = total_refund_in_ten_thousands.toFixed(0)
-        document.getElementById("total_refund").innerHTML = "總秒退: $" + total_refund_norm + "萬";
-        document.getElementById("total_count").innerHTML = "總次數: " + total_data.total_count;
+        document.getElementById("total_refund").innerHTML = "$" + total_refund_norm + "萬/" +
+            + total_data.total_count + "次";
     }
 }
 
 function parseData(data, tabletop) {
     displayMapInfo(tabletop.sheets("summary").all());
     displayTotal(tabletop.sheets("total").all());
+}
+
+function drawBrandRanking() {
+      var queryString = encodeURIComponent('SELECT I,C ORDER BY C DESC LIMIT 10');
+      var query = new google.visualization.Query(
+          'https://docs.google.com/spreadsheets/d/1NoZDaQLH_1cPO77GRcP4NG5Ll0CzsgMNGzKOBK0h3dk/gviz/tq?sheet=summary&headers=1&tq=' + queryString);
+      query.send(handleBrandRankingResponse);
+    }
+
+function handleBrandRankingResponse(response) {
+    if (response.isError()) {
+        alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+        return;
+    }
+
+    var data = response.getDataTable();
+    var chart = new google.visualization.ColumnChart(document.getElementById('chart_brand_div'));
+    chart.draw(data,
+        { title: "分店排行",
+          height: 400,
+          legend: { position: "none" },
+          colors:['purple'] });
+}
+
+function drawCountyRanking() {
+      var queryString = encodeURIComponent('SELECT H,SUM(C) GROUP BY H ORDER BY SUM(C) DESC LIMIT 10');
+      var query = new google.visualization.Query(
+          'https://docs.google.com/spreadsheets/d/1NoZDaQLH_1cPO77GRcP4NG5Ll0CzsgMNGzKOBK0h3dk/gviz/tq?sheet=summary&headers=1&tq=' + queryString);
+      query.send(handleCountyRankingResponse);
+    }
+
+function handleCountyRankingResponse(response) {
+    if (response.isError()) {
+        alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+        return;
+    }
+
+    var data = response.getDataTable();
+    var chart = new google.visualization.ColumnChart(document.getElementById('chart_county_div'));
+    chart.draw(data,
+        { title: "縣市排行",
+          height: 400,
+          legend: { position: "none" },
+          colors:['green'] });
 }
