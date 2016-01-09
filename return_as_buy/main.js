@@ -38,12 +38,12 @@ function displayMapInfo(summary_data) {
         })
             .addTo(map)
             .bindPopup(place_name +
-                       "<br/>秒退金額: $" + return_data.refund +
+                       "<br/>秒退金額: NT$" + return_data.refund +
                        "<br/>秒退次數: " + return_data.count);
         L.marker(coordinate, {
             icon: L.divIcon({
                 className: 'text-labels',   // Set class for CSS styling
-                html: "$" + return_data.refund,
+                html: return_data.refund,
                 iconSize: 50
             }),
                zIndexOffset: 1000     // Make appear above other map features
@@ -57,7 +57,7 @@ function displayTotal(total_datas) {
         var total_data = total_datas[i]; //getting e row from table
         var total_refund_in_ten_thousands = (total_data.total_refund / 10000)
         var total_refund_norm = total_refund_in_ten_thousands.toFixed(0)
-        document.getElementById("total_refund").innerHTML = "$" + total_refund_norm + "萬/" +
+        document.getElementById("total_refund").innerHTML = "NT$" + total_refund_norm + "萬/" +
             + total_data.total_count + "次";
     }
 }
