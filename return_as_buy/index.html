@@ -39,6 +39,13 @@
         .hidden{
             display: none;
         }
+        #fb_button{
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            cursor: pointer;
+            z-index: 1;
+        }
     </style>
     <title>滅頂秒退地圖</title>
 </head>
@@ -101,7 +108,6 @@
           </button>
           <a class="navbar-brand">滅頂秒退地圖</a>
           <a class="navbar-brand" id="total_refund"></a>
-          <div class="fb-like navbar-brand" data-href="http://jimhorng.github.io/return_as_buy/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">
@@ -113,6 +119,9 @@
         </div>
       </div>
     </nav>
+
+    <div id="fb_button" class="fb-like" data-href="http://jimhorng.github.io/return_as_buy/"     data-layout="button_count" data-action="like" data-show-faces="false" data-share="true">
+    </div>
 
     <div id="map" align="center">
     </div>
