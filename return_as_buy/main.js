@@ -28,30 +28,34 @@ google.charts.setOnLoadCallback(function () {
 });
 
 function displayMapInfo(summary_data) {
-       for (var i in summary_data) {
+    var markers = new L.MarkerClusterGroup({
+        showCoverageOnHover: false,
+        spiderfyOnMaxZoom: false,
+        disableClusteringAtZoom: 13,
+        iconCreateFunction: function (cluster) {
+            var childMarkers = cluster.getAllChildMarkers();
+            var refundClustered = 0;
+            for (var i = 0; i < childMarkers.length; i++) {
+                refundClustered += childMarkers[i].amount;
+            }
+            return createMarkerIcon("myCircleCluster", refundClustered);
+        }
+    });
+    for (var i in summary_data) {
         var return_data = summary_data[i]; //getting e row from table
         var coordinate = [return_data.latitude, return_data.longitude];
-        var place_name = return_data.shop_name + "_" + return_data.branch_name
-        var radius = (return_data.size - 5) * 50
-        L.circle(coordinate, radius, {
-            color: 'red',
-            fillColor: '#f03',
-            fillOpacity: 0.5
+        var place_name = return_data.shop_name + "_" + return_data.branch_name;
+        var refund = parseInt(return_data.refund);
+        var refundMarker = L.marker(coordinate, {
+            icon: createMarkerIcon("myCircleMarker", refund)
         })
-            .addTo(map)
             .bindPopup(place_name +
-                       "<br/>秒退金額: NT$" + return_data.refund +
-                       "<br/>秒退次數: " + return_data.count);
-        L.marker(coordinate, {
-            icon: L.divIcon({
-                className: 'text-labels',   // Set class for CSS styling
-                html: return_data.refund,
-                iconSize: 50
-            }),
-               zIndexOffset: 1000     // Make appear above other map features
-        })
-            .addTo(map);
+                "<br/>秒退金額: NT$" + return_data.refund +
+                "<br/>秒退次數: " + return_data.count);
+        refundMarker.amount = refund
+        markers.addLayer(refundMarker);
     }
+    map.addLayer(markers);
 }
 
 function displayTotal(total_datas) {
@@ -111,4 +115,13 @@ function handleCountyRankingResponse(response) {
           height: 400,
           legend: { position: "none" },
           colors:['green'] });
+}
+
+function createMarkerIcon(style, refund) {
+    var size = Math.log(refund) * 5
+    var refundIn10K = (Math.ceil(refund / 10000 * 10) / 10).toFixed(1)
+    return L.divIcon({
+        html: "<span class='markerSpan'>" + refundIn10K + "萬</span>",
+        className: "myCircleBase " + style,
+        iconSize: L.point(size, size) });
 }
