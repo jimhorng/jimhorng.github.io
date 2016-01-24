@@ -27,6 +27,18 @@ google.charts.setOnLoadCallback(function () {
     drawCountyRanking();
 });
 
+getAndDisplayElapsedDays();
+
+function getAndDisplayElapsedDays() {
+    var msecPerMinute = 1000 * 60;
+    var msecPerHour = msecPerMinute * 60;
+    var msecPerDay = msecPerHour * 24;
+    var now = new Date();
+    var start = new Date("12/9/2015");
+    var elapsedDays = Math.floor((now.getTime() - start.getTime()) / msecPerDay );
+    document.getElementById("elapsed_days").innerHTML = elapsedDays;
+}
+
 function displayMapInfo(summary_data) {
     var markers = new L.MarkerClusterGroup({
         showCoverageOnHover: false,
@@ -58,19 +70,45 @@ function displayMapInfo(summary_data) {
     map.addLayer(markers);
 }
 
-function displayTotal(total_datas) {
+function displaySummary(total_datas) {
     for (var i in total_datas) {
         var total_data = total_datas[i]; //getting e row from table
         var total_refund_in_ten_thousands = (total_data.total_refund / 10000)
         var total_refund_norm = total_refund_in_ten_thousands.toFixed(0)
+        // total refund
         document.getElementById("total_refund").innerHTML = "NT$" + total_refund_norm + "萬/" +
-            + total_data.total_count + "次";
+            total_data.total_count + "次";
+        // 1201 asset
+        var assetObj = document.getElementById("asset_1201");
+        var percentage = ((total_data.asset_1201_now / total_data.asset_1201_20143Q ) * 100).toFixed(0);
+        assetObj.innerHTML = (total_data.asset_1201_now * 10000)+" / "+
+            (total_data.asset_1201_20143Q * 10000)+" (萬)";
+        assetObj.setAttribute("aria-valuenow", percentage);
+        assetObj.setAttribute("style", "width:"+percentage+"%");
+        // stock percentage
+        var stockPercentObj = document.getElementById("stock_percent");
+        percentage = parseInt(total_data.ds_stock_percent)
+        stockPercentObj.innerHTML = percentage + " %";
+        stockPercentObj.setAttribute("aria-valuenow", percentage);
+        stockPercentObj.setAttribute("style", "width:"+percentage+"%");
+        // chair percentage
+        var stockChairObj = document.getElementById("stock_chair");
+        percentage = ((total_data.ds_chair / total_data.total_chair) * 100 ).toFixed(1);
+        stockChairObj.innerHTML = total_data.ds_chair + " / " + total_data.total_chair;
+        stockChairObj.setAttribute("aria-valuenow", percentage);
+        stockChairObj.setAttribute("style", "width:"+percentage+"%");
+        // stock price
+        var stockPriceObj = document.getElementById("stock_price");
+        percentage = ((total_data.stock_price_now / total_data.stock_price_2014_10_3) * 100 ).toFixed(1);
+        stockPriceObj.innerHTML = total_data.stock_price_now + " / " + total_data.stock_price_2014_10_3;
+        stockPriceObj.setAttribute("aria-valuenow", percentage);
+        stockPriceObj.setAttribute("style", "width:"+percentage+"%");
     }
 }
 
 function parseData(data, tabletop) {
     displayMapInfo(tabletop.sheets("summary").all());
-    displayTotal(tabletop.sheets("total").all());
+    displaySummary(tabletop.sheets("total").all());
 }
 
 function drawBrandRanking() {

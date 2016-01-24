@@ -71,6 +71,23 @@
             opacity: 1;
             font: bold;
         }
+        .progress {
+          max-width: 400px;
+          width: 80%;
+        }
+        #result {
+          width: 80%;
+          float: right;
+          position:relative;
+          left:-50%;
+        }
+        #result ul {
+          position:relative;
+          left:50%;
+        }
+        .progress-label {
+          float: left;
+        }
     </style>
     <title>滅頂秒退地圖</title>
 </head>
@@ -149,7 +166,31 @@
     </div>
 
     <div id="result" align="center">
-      <a class="label label-success" id="total_refund"></a>
+      <ul class="list-group">
+        <li class="list-group-item">總秒退 <span id="total_refund" class="label label-success"></span></li>
+        <li class="list-group-item">開戰第 <span id="elapsed_days" class="label label-info"></span> 日</li>
+        <li class="list-group-item">
+          <span class="progress-label">頂新味全持股</span>
+          <div class="progress">
+            <div id="stock_percent" class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <span class="progress-label">頂新味全董事會</span>
+          <div class="progress">
+            <div id="stock_chair" class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+            </div>
+          </div>
+          <span class="progress-label">頂新味全股價</span>
+          <div class="progress">
+            <div id="stock_price" class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+            </div>
+          </div>
+          <span class="progress-label">頂新味全淨資產</span>
+          <div class="progress">
+            <div id="asset_1201" class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+            </div>
+          </div>
+          </li>
+      </ul>
     </div>
 
     <div id="map" align="center">
