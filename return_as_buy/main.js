@@ -2,12 +2,12 @@
 var CartoDB_DarkMatter = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
     attribution: '<a href="https://goo.gl/f9znBF">資料來源</a> &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
     subdomains: 'abcd',
-    minZoom: 8,
+    minZoom: 7,
     maxZoom: 17
 });
 
 // Load and initialize leaflet map.
-var map = L.map('map', { 'messagebox': true }).setView([25.046374, 121.517896], 12);
+var map = L.map('map', { 'messagebox': true }).setView([23.9199416, 120.9895349], 7);
 CartoDB_DarkMatter.addTo(map);
 map._initPathRoot();
 map.messagebox.options.timeout = 9999999999;
