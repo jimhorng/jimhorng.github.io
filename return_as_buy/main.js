@@ -76,8 +76,8 @@ function displaySummary(total_datas) {
         var total_refund_in_ten_thousands = (total_data.total_refund / 10000)
         var total_refund_norm = total_refund_in_ten_thousands.toFixed(0)
         // total refund
-        document.getElementById("total_refund").innerHTML = "NT$" + total_refund_norm + "萬/" +
-            total_data.total_count + "次";
+        document.getElementById("total_refund").innerHTML = "NT$ " + total_refund_norm + " 萬 / " +
+            total_data.total_count + " 次";
         // 1201 asset
         var assetObj = document.getElementById("asset_1201");
         var percentage = ((total_data.asset_1201_now / total_data.asset_1201_20143Q ) * 100).toFixed(0);
