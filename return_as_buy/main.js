@@ -21,10 +21,11 @@ Tabletop.init({
 });
 
 // draw chart
-google.charts.load('current', {packages: ['corechart']});
+google.charts.load('current', {packages: ['line', 'corechart']});
 google.charts.setOnLoadCallback(function () {
     drawBrandRanking();
     drawCountyRanking();
+    drawTrend();
 });
 
 getAndDisplayElapsedDays();
@@ -138,7 +139,7 @@ function drawCountyRanking() {
       var query = new google.visualization.Query(
           'https://docs.google.com/spreadsheets/d/1NoZDaQLH_1cPO77GRcP4NG5Ll0CzsgMNGzKOBK0h3dk/gviz/tq?sheet=summary&headers=1&tq=' + queryString);
       query.send(handleCountyRankingResponse);
-    }
+}
 
 function handleCountyRankingResponse(response) {
     if (response.isError()) {
@@ -153,6 +154,39 @@ function handleCountyRankingResponse(response) {
           height: 400,
           legend: { position: "none" },
           colors:['green'] });
+}
+
+function drawTrend() {
+      var queryString = encodeURIComponent("select toDate(B), sum(F), count(F) where C != '' and L = 1 group by toDate(B) order by toDate(B) DESC LIMIT 30 label toDate(B) 'date', sum(F) 'refund_total', count(F) 'count'");
+      var query = new google.visualization.Query(
+          'https://docs.google.com/spreadsheets/d/1NoZDaQLH_1cPO77GRcP4NG5Ll0CzsgMNGzKOBK0h3dk/gviz/tq?sheet=raw_data&headers=1&tq=' + queryString);
+      query.send(handleTrendResponse);
+}
+
+function handleTrendResponse(response) {
+    if (response.isError()) {
+        alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+        return;
+    }
+
+    var data = response.getDataTable();
+    var chart = new google.charts.Line(document.getElementById('trend_date'));
+    chart.draw(data,
+        {
+            chart: { title: '走勢圖' },
+            height: 400,
+            width: '80%',
+            series: {
+                0: {axis: 'refund_total', title:'金額'},
+                1: {axis: 'count', title: '次數'}
+            },
+            axes: {
+                y: {
+                    refund_total: {label: '金額'},
+                    count: {label: '次數'}
+                }
+            }
+        });
 }
 
 function createMarkerIcon(style, refund) {
