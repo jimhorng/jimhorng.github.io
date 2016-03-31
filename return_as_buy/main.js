@@ -82,8 +82,8 @@ function displaySummary(total_datas) {
         // 1201 asset
         var assetObj = document.getElementById("asset_1201");
         var percentage = ((total_data.asset_1201_now / total_data.asset_1201_20143Q ) * 100).toFixed(0);
-        assetObj.innerHTML = (total_data.asset_1201_now * 10000)+" / "+
-            (total_data.asset_1201_20143Q * 10000)+" (萬)";
+        assetObj.innerHTML = (total_data.asset_1201_now)+" / "+
+            (total_data.asset_1201_20143Q)+" (億)";
         assetObj.setAttribute("aria-valuenow", percentage);
         assetObj.setAttribute("style", "width:"+percentage+"%");
         // stock percentage
@@ -175,15 +175,16 @@ function handleTrendResponse(response) {
         {
             chart: { title: '走勢圖' },
             height: 400,
-            width: '80%',
+            width: '90%',
+            lineWidth: 5,
             series: {
-                0: {axis: 'refund_total', title:'金額'},
+                0: {axis: 'refund_total', title:'金額' },
                 1: {axis: 'count', title: '次數'}
             },
             axes: {
                 y: {
                     refund_total: {label: '金額'},
-                    count: {label: '次數'}
+                    count: {label: '次數', minValue: 0}
                 }
             }
         });
