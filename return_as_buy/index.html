@@ -141,6 +141,11 @@
             });
         });
     });
+    // prevent incorrect scroll while loading iframe
+    $(".prevent").click(function(e) { //Note the e for event
+        e.preventDefault();
+    });
+
     </script>
     <!-- menu bar -->
     <nav class="navbar navbar-inverse navbar-fixed-top" id="nav">
